@@ -1,0 +1,41 @@
+{
+  "name": "logistics",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "build": "npm run clean && tsc && tsc-alias",
+    "dev": "nodemon --watch src/ --exec \"npm run serve\" -e ts",
+    "serve": "npm run build && node ./bin/www",
+    "compile": "tsc -p ./tsconfig.json",
+    "test": "jest --runInBand --detectOpenHandles",
+    "clean": "rm -rf dist && mkdir dist",
+    "lint": "eslint . --ext ts",
+    "lint:fix": "eslint . --ext ts --fix",
+    "prettier": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.5",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "mongoose": "^8.8.2",
+    "morgan": "~1.9.1",
+    "tsc": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.7",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.9.1",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "eslint": "^9.15.0",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.6.3"
+  }
+}
