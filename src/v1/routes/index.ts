@@ -3,9 +3,8 @@ import authRouter from '../feat/auth/auth-route';
 
 const router = Router();
 
-/* GET home page. */
 router.get('/', function(req:Request, res:Response, next:NextFunction) {
-  res.send({ title: 'Express' });
+  res.send({ title: 'ap is live' });
 });
 
 router.use("/auth", authRouter);
