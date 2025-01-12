@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import Config from './config';
-// import { User } from './entities/User';
+import { User } from '../v1/feat/auth/auth.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
   database: Config.database.database,
   synchronize: Config.database.synchronize,
   logging: Config.database.logging,
-  // entities: [User], // Add all entities here
+  entities: [User]
 });
 
 export const connectDB = async (): Promise<void> => {
