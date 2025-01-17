@@ -11,7 +11,8 @@ export const AppDataSource = new DataSource({
   database: Config.database.database,
   synchronize: Config.database.synchronize,
   logging: Config.database.logging,
-  entities: [User]
+  entities: [User],
+  migrations: ['../src/config/migrations/*.ts'],
 });
 
 export const connectDB = async (): Promise<void> => {
