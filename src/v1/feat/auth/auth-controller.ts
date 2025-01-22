@@ -44,6 +44,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
 };
 
 export const loginUser = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
+try {
   const { email, password } = req.body;
 
   const userRepository = AppDataSource.getRepository(User);
@@ -62,5 +63,10 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
   const token = jwt.sign(payload, secret, { expiresIn: '1h' });
 
-  return res.json({ token });
+  return res.status(201).json({ message: 'User login successfully', token }); 
+} catch (error) {
+  console.error('Error in registerUser:', error);
+  next(error);
+  return res.status(500).json({ error: 'Internal Server Error' });
+}
 };

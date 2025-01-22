@@ -1,9 +1,12 @@
 import express,{ Request, Response, NextFunction } from 'express';
-import { registerUser } from './auth-controller';
+import { loginUser, registerUser } from './auth-controller';
 
 const router = express.Router();
 
 router.post('/register', (req: Request, res: Response, next: NextFunction) => {
     registerUser(req, res, next);
+  });
+router.post('/login', (req: Request, res: Response, next: NextFunction) => {
+    loginUser(req, res, next);
   });
 export default router;
