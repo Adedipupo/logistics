@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   synchronize: Config.database.synchronize,
   logging: Config.database.logging,
   entities: [User],
-  migrations: ['dist/src/config/migrations/*.ts'],
+  migrations: ['dist/config/migrations/*.js'],
 });
 
 export const connectDB = async (): Promise<void> => {

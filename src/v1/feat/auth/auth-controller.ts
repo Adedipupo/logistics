@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from 'express';
+import  { Request, Response, NextFunction } from 'express';
 import { AppDataSource } from '../../../config/db';
 import jwt from 'jsonwebtoken';
 import Config from '../../../config/config';
 import { User } from './auth.entity';
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
-  const { email, username, password } = req.body;
+  try {
+    const { email, username, password } = req.body;
 
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.findOne({ where: { email } });
@@ -22,8 +23,12 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
   newUser.isActive = true;
   newUser.role = 'user';
 
-  const payload = { id: newUser.id, role: newUser.role };
-  const secret = Config.JWTHeader.secret;
+     // Save the user to the database
+     await userRepository.save(newUser);
+
+    // Generate a JWT token
+    const payload = { userId: newUser.id, username: newUser.username, email: newUser.email };
+    const secret = Config.JWTHeader.secret;
 
   if (!secret) {
     return res.status(500).json({ message: 'JWT secret is not configured' });
@@ -31,7 +36,11 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
 
   const token = jwt.sign(payload, secret, { expiresIn: '1h' });
 
-  return res.json({ token });
+  return res.status(201).json({ message: 'User registered successfully', token });  } catch (error) {
+    console.error('Error in registerUser:', error);
+    next(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 export const loginUser = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {

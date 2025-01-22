@@ -8,7 +8,8 @@
     "dev": "nodemon --watch src/ --exec \"npm run serve\" -e ts",
     "serve": "npx tsc && node ./bin/www",
     "compile": "npx tsc -p ./tsconfig.json",
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles",
+    "typeorm": "typeorm-ts-node-esm"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
