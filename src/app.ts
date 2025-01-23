@@ -1,3 +1,4 @@
+import "../@types/custom.d.ts";
 import createError from 'http-errors';
 import express,{Request,Response,NextFunction} from 'express';
 import path from 'path';
