@@ -10,8 +10,8 @@ class AuthController {
 
   authRegister = async(req: Request, res: Response, next: NextFunction): Promise<Response>=>{
     try {
-      const {email,username, password} = req.body;
-      const result = await this.authService.registerUserService(username, email, password);
+      const {email, password,role,username} = req.body;
+      const result = await this.authService.registerUserService(email, password,role,username);
       return res.status(201).json(result);
     } catch (error) {
       next(error);

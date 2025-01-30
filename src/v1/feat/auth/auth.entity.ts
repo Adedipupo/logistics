@@ -1,23 +1,34 @@
-import { Entity,PrimaryGeneratedColumn,Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne,JoinColumn } from "typeorm";
+import { v4 as uuidv4 } from "uuid";
+import { Profile } from "../user/user-entity";
 
 @Entity()
-export class User {
-    @PrimaryGeneratedColumn()
-    id: number
+export class Auth {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    username: string
+  @Column({ unique: true })
+  username: string;
 
-    @Column({ unique: true })
-    email: string;
+  @Column({ unique: true })
+  email: string;
 
-    @Column()
-    password: string;
+  @Column()
+  password: string;
 
-    @Column()
-    isActive: boolean
-    
-    @Column({ enum: ['admin', 'user', 'support'] })
-    role: string;
+  @Column()
+  isActive: boolean;
 
+  @Column({ enum: ["admin", "user", "merchant", "support"], default: "user" })
+  role: string;
+
+  @OneToOne(() => Profile, { cascade: true })
+  @JoinColumn()
+  profile: Profile;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuidv4(); // Generate a UUID if it doesn't exist
+    }
+  } 
 }

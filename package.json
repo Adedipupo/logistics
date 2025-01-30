@@ -9,7 +9,8 @@
     "serve": "npx tsc && node ./bin/www",
     "compile": "npx tsc -p ./tsconfig.json",
     "test": "jest --runInBand --detectOpenHandles",
-    "typeorm": "typeorm-ts-node-esm"
+    "typeorm": "typeorm-ts-node-esm",
+    "migrate:run" : "npx typeorm migration:run -d dist/config/db.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -23,7 +24,8 @@
     "morgan": "~1.9.1",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.7",

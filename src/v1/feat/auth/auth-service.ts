@@ -1,28 +1,33 @@
 import Config from "../../../config/config";
 import { AppDataSource } from "../../../config/db";
 import Token from "../../../utils/tokenUtils";
-import { User } from "./auth.entity";
+import { Profile } from "../user/user-entity";
+import { Auth } from "./auth.entity";
 
 class AuthService {
   async registerUserService(
-    username: string,
     email: string,
-    password: string
+    password: string,
+    role: string,
+    username: string
   ): Promise<{ message: string; token: string }> {
-    const userRepository = AppDataSource.getRepository(User);
+    const userRepository = AppDataSource.getRepository(Auth);
+    const profileRepository = AppDataSource.getRepository(Profile);
     const emailExist = await userRepository.findOne({ where: { email } });
 
     if (emailExist) {
       throw new Error("Email already exist");
     }
 
-    const newUser = new User();
+    const newProfile = new Profile();
+    newProfile.username = username;
 
-    newUser.username = username;
+    const newUser = new Auth();
+
     newUser.email = email;
     newUser.password = password;
     newUser.isActive = true;
-    newUser.role = "user";
+    newUser.role = role;
 
     // Save the user to the database
     await userRepository.save(newUser);
@@ -30,8 +35,8 @@ class AuthService {
     // Generate a JWT token
     const payload = {
       userId: newUser.id,
-      username: newUser.username,
       email: newUser.email,
+      role: newUser.role,
     };
 
     const token = await Token.generateToken(payload);
@@ -40,7 +45,7 @@ class AuthService {
 
   async loginUserService(email: string, password: string):  Promise<{ message: string; token: string }> {
    
-    const userRepository = AppDataSource.getRepository(User);
+    const userRepository = AppDataSource.getRepository(Auth);
     const user = await userRepository.findOne({ where: { email } });
 
     if (!user || user.password !== password) {
