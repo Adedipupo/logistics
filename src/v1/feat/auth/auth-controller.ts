@@ -8,25 +8,25 @@ class AuthController {
     this.authService = new AuthService();
   }
 
-  authRegister = async(req: Request, res: Response, next: NextFunction): Promise<Response>=>{
+  authRegister = async(req: Request, res: Response, next: NextFunction): Promise<Response | void>=>{
     try {
       const {email, password,role,username} = req.body;
       const result = await this.authService.registerUserService(email, password,role,username);
       return res.status(201).json(result);
     } catch (error) {
+      console.error("Register Error:", error);
       next(error);
-      return res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 
-  authLogin = async(req: Request, res: Response, next: NextFunction): Promise<Response>=>{
+  authLogin = async(req: Request, res: Response, next: NextFunction): Promise<Response | void>=>{
     try {
       const {email, password} = req.body;
       const result = await this.authService.loginUserService(email, password);
       return res.status(201).json(result);
     } catch (error) {
+      console.error("Login Error:", error);
       next(error);
-      return res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 
