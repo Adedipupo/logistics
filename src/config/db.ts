@@ -14,6 +14,7 @@ export const AppDataSource = new DataSource({
   logging: Config.database.logging,
   entities: [Auth,Profile],
   migrations: ['dist/config/migrations/*.js'],
+  migrationsTableName: 'migrations_history',
 });
 
 export const connectDB = async (): Promise<void> => {
