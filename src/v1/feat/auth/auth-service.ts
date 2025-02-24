@@ -19,15 +19,19 @@ class AuthService {
       throw new Error("Email already exist");
     }
 
-    const newProfile = new Profile();
-    newProfile.username = username;
-
     const newUser = new Auth();
 
     newUser.email = email;
     newUser.password = password;
     newUser.isActive = true;
     newUser.role = role;
+    newUser.username = username;
+
+    const newProfile = new Profile();
+    newProfile.username = username;
+
+    await profileRepository.save(newProfile);
+
 
     // Save the user to the database
     await userRepository.save(newUser);

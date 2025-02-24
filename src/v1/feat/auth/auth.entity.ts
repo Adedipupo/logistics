@@ -22,13 +22,13 @@ export class Auth {
   @Column({ enum: ["admin", "user", "merchant", "support"], default: "user" })
   role: string;
 
-  @OneToOne(() => Profile, { cascade: true })
+  @OneToOne(() => Profile, (profile) => profile.auth, { cascade: true })
   @JoinColumn()
-  profile: Profile;
+  profile!: Profile;
 
   constructor() {
     if (!this.id) {
-      this.id = uuidv4(); // Generate a UUID if it doesn't exist
+      this.id = uuidv4();
     }
-  } 
+  }
 }

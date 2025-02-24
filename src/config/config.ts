@@ -12,7 +12,6 @@ const Config = {
     username: process.env.DB_USERNAME || 'postgres',
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_NAME || 'logistics_db',
-    synchronize: process.env.DB_SYNC === 'true', // Use true in dev, false in prod
     logging: process.env.DB_LOGGING === 'true',
   },
   JWTHeader: {

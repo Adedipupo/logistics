@@ -2,7 +2,7 @@
   "name": "logistics",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
+"scripts": {
     "start": "node ./bin/www",
     "tsc": "tsc -p ./tsconfig.json",
     "dev": "nodemon --watch src/ --exec \"npm run serve\" -e ts",
@@ -10,8 +10,9 @@
     "compile": "npx tsc -p ./tsconfig.json",
     "test": "jest --runInBand --detectOpenHandles",
     "typeorm": "typeorm-ts-node-esm",
-    "migrate:run" : "npx typeorm migration:run -d dist/config/db.js"
-  },
+    "migrate:run": "npx typeorm migration:run -d dist/config/db.js",
+    "migrate:generate": "npx typeorm migration:generate src/config/migrations/NewMigration -d dist/config/db.js"
+},
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
